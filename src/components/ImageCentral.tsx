@@ -13,7 +13,7 @@ const FullWidthImage = () => {
   return (
     <div className="relative w-full h-0 pb-[51.25%]">
       <Image
-        src={CachorroHumano}
+        src="/images/cachorrohumano.png"
         alt="Imagem de fundo hero"
         layout="fill"
         objectFit="cover"

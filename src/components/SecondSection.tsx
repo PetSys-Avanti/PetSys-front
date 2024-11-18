@@ -1,24 +1,15 @@
 import React from 'react';
 import PetCard from './PetCard';
-
 import { FaDog } from 'react-icons/fa';
-
 import { Button } from "@/components/ui/button";  // Certifique-se de que o caminho está correto.
-
-import Caramelo from '../app/public/images/Caramelo.jpg';
-import Labrador from '../app/public/images/labrador.jpg';
-import Poodle from '../app/public/images/poodle.jpg';
-import Pitbull from '../app/public/images/Pitbull.jpg';
-import York from '../app/public/images/York.jpg';
 import Image from 'next/image';
-import avantiSemFundo from '../app/public/images/download.png'
-import atlantico from '../app/public/images/Logo-atl.png'
+
 
 export default function SecondSection() {
 
   const forAddotion = [
     {
-      image: Caramelo,
+      image: "/images/Caramelo.jpg",
       id: "1",
       name: "Tico",
       gender: "Macho",
@@ -26,7 +17,7 @@ export default function SecondSection() {
       size: "Médio Porte",
     },
     {
-      image: Labrador,
+      image: "/images/labrador.jpg",
       id: "2",
       name: "Teco",
       gender: "Macho",
@@ -34,7 +25,7 @@ export default function SecondSection() {
       size: "Médio Porte",
     },
     {
-      image: Poodle,
+      image: "/images/poodle.jpg",
       id: "3",
       name: "Barão",
       gender: "Macho",
@@ -42,7 +33,7 @@ export default function SecondSection() {
       size: "Grande Porte",
     },
     {
-      image: York,
+      image: "/images/York.jpg",
       id: "4",
       name: "Duque",
       gender: "Macho",
@@ -50,7 +41,7 @@ export default function SecondSection() {
       size: "Pequeno Porte",
     },
     {
-      image: Pitbull,
+      image: "/images/Pitbull.jpg",
       id: "5",
       name: "Toco",
       gender: "Macho",
@@ -86,10 +77,10 @@ export default function SecondSection() {
 
       <div className='flex justify-center gap-10 my-10'>
         <div className="w-44 h-44 flex justify-center items-center">
-          <Image src={avantiSemFundo} height={150} width={150} alt='Logo Avanti' className="object-contain"/>
+          <Image src="/images/download.png" height={150} width={150} alt='Logo Avanti' className="object-contain"/>
         </div>
         <div className="w-44 h-44 flex justify-center items-center">
-          <Image src={atlantico} height={150} width={150} alt='Logo Atlântico' className="object-contain"/>
+          <Image src="/images/Logo-atl.png" height={150} width={150} alt='Logo Atlântico' className="object-contain"/>
         </div>
       </div>
     </section>
