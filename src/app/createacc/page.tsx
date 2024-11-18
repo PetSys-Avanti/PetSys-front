@@ -3,7 +3,7 @@
 
 import React, { useState } from 'react';
 
-import { sessions } from '@/lib/textInputs';
+
 import { Button } from "@/components/ui/button"
 import {
     Card,
@@ -24,7 +24,7 @@ import {
 
 
 export default function FormRegister() {
-    const [numSession, setNumSession] = useState(0);
+
     const [formData, setFormData] = useState({
         nome: '',
         senha: '',
@@ -32,35 +32,19 @@ export default function FormRegister() {
 
     });
 
-    function handleSection() {
-        if (numSession < sessions.length - 1) {
-            setNumSession(numSession + 1);
-        }
-    }
-
-    function handleSectionBack() {
-        if (numSession > 0) {
-            setNumSession(numSession - 1);
-        }
-    }
-
-
-    function handleChange(text, label) {
-        setFormData({ ...formData, [label.toLowerCase()]: text });
-    }
 
     return (
         <div className='flex flex-col h-screen w-full justify-center items-center'>
 
-            <Tabs defaultValue="account" className="w-[400px]">
+            <Tabs defaultValue="create-account" className="w-[400px]">
                 <TabsList className="grid w-full grid-cols-2">
-                    <TabsTrigger value="account">Account</TabsTrigger>
-                    <TabsTrigger value="password">Password</TabsTrigger>
+                    <TabsTrigger value="create-account">Conta</TabsTrigger>
+                    <TabsTrigger value="login">Login</TabsTrigger>
                 </TabsList>
-                <TabsContent value="account">
+                <TabsContent value="create-account">
                     <Card>
                         <CardHeader>
-                            <CardTitle>Account</CardTitle>
+                            <CardTitle>Criar conta</CardTitle>
                             <CardDescription>
                                 Make changes to your account here. Click save when you're done.
                             </CardDescription>
@@ -80,10 +64,10 @@ export default function FormRegister() {
                         </CardFooter>
                     </Card>
                 </TabsContent>
-                <TabsContent value="password">
+                <TabsContent value="login">
                     <Card>
                         <CardHeader>
-                            <CardTitle>Password</CardTitle>
+                            <CardTitle>Login</CardTitle>
                             <CardDescription>
                                 Change your password here. After saving, you'll be logged out.
                             </CardDescription>

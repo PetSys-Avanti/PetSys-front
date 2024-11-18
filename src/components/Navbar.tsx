@@ -41,7 +41,7 @@ const Navbar = () => {
           </li>
           <li>
           <Button variant="outline" className={` ${isScrolled ? 'opacity-75' : 'opacity-100'}`}  asChild>
-              <Link href="/login">Login</Link>
+              <Link href="/createacc">Login</Link>
             </Button>
           </li>
         </ul>
