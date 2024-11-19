@@ -14,10 +14,10 @@ const PetCard = ({ pet }) => {
           <PetImage pet={pet} />
         </div>
         <div className="flex flex-col items-center text-sm text-gray-600">
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">{pet.name}</h3>
-          <p className="text-sm mb-1">Gênero: {pet.gender}</p>
-          <p className="text-sm mb-1">Idade: {pet.age}</p>
-          <p className="text-sm mb-1">Porte: {pet.size}</p>
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">{pet.nome}</h3>
+          <p className="text-sm mb-1">Gênero: {pet.sexo_pet}</p>
+          <p className="text-sm mb-1">Idade: {pet.data_nasc}</p>
+          <p className="text-sm mb-1">Porte: {pet.tamanho_pet}</p>
         </div>
       </div>
     </Link>

@@ -1,69 +1,152 @@
-'use client'
+'use client';
 
-import { useEffect, useState } from 'react';
-import { useParams } from 'next/navigation'; 
-import { FaHeart } from 'react-icons/fa';
-import PetImage from '@/components/PetImage'; 
+import React, { useState } from 'react';
 
-const PetPage = () => {
-  const { id } = useParams();  
-  const [pet, setPet] = useState<any>(null);
-
-  //ALAN, SUBSTITUI, AQUI, NO USEEFECT, COM OS DADOS DA API
-  useEffect(() => {
-    if (!id) return;
-
-    const petData = [
-      { id: "1", name: "Tico", gender: "Macho", age: "Adulto", size: "Médio Porte", image: "/images/Caramelo.jpg" },
-      { id: "2", name: "Teco", gender: "Macho", age: "Adulto", size: "Médio Porte", image: "/images/labrador.jpg" },
-      { id: "3", name: "Barão", gender: "Macho", age: "Adulto", size: "Grande Porte", image: "/images/poodle.jpg" },
-      { id: "4", name: "Duque", gender: "Macho", age: "Adulto", size: "Pequeno Porte", image: "/images/York.jpg" },
-      { id: "5", name: "Toco", gender: "Macho", age: "Adulto", size: "Grande Porte", image: "/images/Pitbull.jpg" },
-    ];
-
-    const foundPet = petData.find((pet) => pet.id === id);
-    setPet(foundPet);
-  }, [id]);
-
-  if (!pet) {
-    return <div>Carregando...</div>; 
-  }
-
-  return (
-    <div className="flex justify-start py-10 px-10">
-      {/* Card de Pet */}
-      <div className="flex flex-col items-center shadow-lg h-[500px] w-[320px] bg-gray-100 p-6 text-gray-800 rounded-xl relative cursor-pointer transition-transform duration-200 hover:scale-105 hover:shadow-xl">
-
-        <FaHeart
-          title="Gostou de mim? ♥"
-          className="absolute top-4 right-4 text-red-400 text-xl cursor-pointer transition-transform duration-200 hover:scale-110"
-        />
-
-        <div className="relative max-h-[250px] w-full rounded-xl overflow-hidden mb-4 shadow-md">
-          <PetImage pet={pet} /> 
-        </div>
-
-        <div className="flex flex-col items-center text-sm text-gray-600">
-          <h3 className="text-2xl font-semibold text-gray-900 mb-2">{pet.name}</h3>
-          <p className="text-sm mb-1">Gênero: {pet.gender}</p>
-          <p className="text-sm mb-1">Idade: {pet.age}</p>
-          <p className="text-sm mb-1">Porte: {pet.size}</p>
-        </div>
-      </div>
-
+const PetRegistration = () => {
     
-      <div className="flex flex-col ml-8 w-[350px]">
-        <div className="p-6 bg-yellow-100 rounded-xl shadow-md text-gray-800">
-          <h4 className="text-lg font-semibold mb-4">Sobre o {pet.name}</h4>
-          <p className="text-sm">
-            {pet.name} é um animal encantador e cheio de energia. Adora brincar e interagir com as pessoas. 
-            Ele é muito sociável e ama estar perto dos outros, seja em passeios ou em momentos de lazer em casa. 
-            Com um temperamento amigável, é o companheiro ideal para famílias e pessoas que buscam a companhia de um pet leal.
-          </p>
+    
+    const [formData, setFormData] = useState({
+        nome: '',
+        especie_pet: '',
+        data_nasc: '',
+        descricao: '',
+        tamanho_pet: '',
+        sexo_pet: '',
+        image_pet: ''
+    });
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value
+        });
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log('Dados do pet:', formData);
+    };
+
+    return (
+        <div className="flex flex-col items-center max-w-4xl mx-auto p-6">
+            <h2 className="text-2xl font-bold mb-6">Registro de Pet</h2>
+            <form onSubmit={handleSubmit} className="w-full space-y-6">
+                
+                <div>
+                    <label className="block text-lg mb-2">Nome</label>
+                    <input
+                        type="text"
+                        name="nome"
+                        value={formData.nome}
+                        onChange={handleChange}
+                        maxLength={100}
+                        required
+                        className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
+                    />
+                </div>
+
+               
+                <div>
+                    <label className="block text-lg mb-2">Espécie</label>
+                    <select
+                        name="especie_pet"
+                        value={formData.especie_pet}
+                        onChange={handleChange}
+                        required
+                        className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
+                    >
+                        <option value="">Selecione a espécie</option>
+                        <option value="cachorro">Cachorro</option>
+                        <option value="gato">Gato</option>
+                        <option value="outro">Outro</option>
+                    </select>
+                </div>
+
+              
+                <div>
+                    <label className="block text-lg mb-2">Data de Nascimento</label>
+                    <input
+                        type="date"
+                        name="data_nasc"
+                        value={formData.data_nasc}
+                        onChange={handleChange}
+                        required
+                        className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
+                    />
+                </div>
+
+           
+
+                <div>
+                    <label className="block text-lg mb-2">Tamanho do Pet</label>
+                    <select
+                        name="tamanho_pet"
+                        value={formData.tamanho_pet}
+                        onChange={handleChange}
+                        required
+                        className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
+                    >
+                        <option value="">Selecione o tamanho</option>
+                        <option value="pequeno">Pequeno</option>
+                        <option value="medio">Médio</option>
+                        <option value="grande">Grande</option>
+                    </select>
+                </div>
+
+             
+                <div>
+                    <label className="block text-lg mb-2">Sexo</label>
+                    <select
+                        name="sexo_pet"
+                        value={formData.sexo_pet}
+                        onChange={handleChange}
+                        required
+                        className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
+                    >
+                        <option value="">Selecione o sexo</option>
+                        <option value="macho">Macho</option>
+                        <option value="femea">Fêmea</option>
+                    </select>
+                </div>
+
+               
+                <div>
+                    <label className="block text-lg mb-2">Imagem do Pet (URL)</label>
+                    <input
+                        type="text"
+                        name="image_pet"
+                        value={formData.image_pet}
+                        onChange={handleChange}
+                        maxLength={300}
+                        className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
+                    />
+                </div>
+
+                
+                <div>
+                    <label className="block text-lg mb-2">Descrição</label>
+                    <textarea
+                        name="descricao"
+                        value={formData.descricao}
+                        onChange={handleChange}
+                        maxLength={280}
+                        className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 resize-none"
+                    />
+                </div>
+
+                
+                <div>
+                    <button
+                        type="submit"
+                        className="w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 transition-colors"
+                    >
+                        Registrar Pet
+                    </button>
+                </div>
+            </form>
         </div>
-      </div>
-    </div>
-  );
+    );
 };
 
-export default PetPage;
+export default PetRegistration;

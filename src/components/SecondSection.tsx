@@ -1,4 +1,8 @@
-import React from 'react';
+'use client'
+
+
+
+import React, { useEffect, useState } from 'react';
 import PetCard from './PetCard';
 import { FaDog } from 'react-icons/fa';
 import { Button } from "@/components/ui/button";  // Certifique-se de que o caminho está correto.
@@ -7,48 +11,33 @@ import Image from 'next/image';
 
 export default function SecondSection() {
 
-  const forAddotion = [
-    {
-      image: "/images/Caramelo.jpg",
-      id: "1",
-      name: "Tico",
-      gender: "Macho",
-      age: "Adulto",
-      size: "Médio Porte",
-    },
-    {
-      image: "/images/labrador.jpg",
-      id: "2",
-      name: "Teco",
-      gender: "Macho",
-      age: "Adulto",
-      size: "Médio Porte",
-    },
-    {
-      image: "/images/poodle.jpg",
-      id: "3",
-      name: "Barão",
-      gender: "Macho",
-      age: "Adulto",
-      size: "Grande Porte",
-    },
-    {
-      image: "/images/York.jpg",
-      id: "4",
-      name: "Duque",
-      gender: "Macho",
-      age: "Adulto",
-      size: "Pequeno Porte",
-    },
-    {
-      image: "/images/Pitbull.jpg",
-      id: "5",
-      name: "Toco",
-      gender: "Macho",
-      age: "Adulto",
-      size: "Grande Porte",
-    },
-  ];
+  const [pets, setPets] = useState([]);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchPets = async () => {
+      try {
+        const response = await fetch('https://api-petsys.onrender.com/pets');
+
+
+        if (!response.ok) {
+          throw new Error(`Erro ao buscar pets: ${response.statusText}`);
+        }
+
+
+        const data = await response.json();
+
+
+        setPets(data);
+      } catch (err) {
+
+        setError(err.message);
+        console.error('Erro ao buscar pets:', err);
+      }
+    };
+
+    fetchPets();
+  }, []);
 
   return (
     <section className="py-10 max-w-none bg-white w-full">
@@ -58,7 +47,7 @@ export default function SecondSection() {
       </h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-w-screen-lg mx-auto">
-        {forAddotion.slice(0, 3).map((pet) => (
+        {pets.slice(0, 3).map((pet) => (
           <PetCard key={pet.id} pet={pet} />
         ))}
       </div>
@@ -77,10 +66,10 @@ export default function SecondSection() {
 
       <div className='flex justify-center gap-10 my-10'>
         <div className="w-44 h-44 flex justify-center items-center">
-          <Image src="/images/download.png" height={150} width={150} alt='Logo Avanti' className="object-contain"/>
+          <Image src="/images/download.png" height={150} width={150} alt='Logo Avanti' className="object-contain" />
         </div>
         <div className="w-44 h-44 flex justify-center items-center">
-          <Image src="/images/Logo-atl.png" height={150} width={150} alt='Logo Atlântico' className="object-contain"/>
+          <Image src="/images/Logo-atl.png" height={150} width={150} alt='Logo Atlântico' className="object-contain" />
         </div>
       </div>
     </section>
