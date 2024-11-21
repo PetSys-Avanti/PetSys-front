@@ -48,10 +48,6 @@ export default function FormRegister() {
     return (
         <div className="flex h-screen w-full justify-center items-center px-4 sm:px-6 lg:px-8 ">
             <div className="flex items-center justify-center w-full max-w-6xl space-x-8">
-             
-                <div className="hidden lg:block w-1/2">
-                    <img src="/images/cachorrohumano.png" alt="Imagem ilustrativa" className="w-full h-full object-cover" />
-                </div>
 
                 <div className="w-full max-w-md">
                     <Tabs defaultValue="login" className="w-full">

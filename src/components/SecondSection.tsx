@@ -5,7 +5,7 @@
 import React, { useEffect, useState } from 'react';
 import PetCard from './PetCard';
 import { FaDog } from 'react-icons/fa';
-import { Button } from "@/components/ui/button";  // Certifique-se de que o caminho está correto.
+import { Button } from "@/components/ui/button";  
 import Image from 'next/image';
 
 
