@@ -49,7 +49,7 @@ export default function FormRegister() {
         <div className="flex h-screen w-full justify-center items-center px-4 sm:px-6 lg:px-8 ">
             <div className="flex items-center justify-center w-full max-w-6xl space-x-8">
 
-                <div className="w-full max-w-md">
+                <div className="  w-full max-w-md">
                     <Tabs defaultValue="login" className="w-full">
                         <TabsList className="grid w-full grid-cols-2 mb-4">
                             <TabsTrigger value="login">Login</TabsTrigger>

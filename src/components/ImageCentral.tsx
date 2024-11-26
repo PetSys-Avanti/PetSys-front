@@ -11,7 +11,7 @@ interface FullWidthImageProps {
 
 const FullWidthImage = () => {
   return (
-    <div className="relative w-full h-0 pb-[51.25%]">
+    <div className="relative w-full pb-[51.25%]">
       <Image
         src="/images/cachorrohumano.png"
         alt="Imagem de fundo hero"
