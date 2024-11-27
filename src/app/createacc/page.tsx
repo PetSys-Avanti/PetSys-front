@@ -1,5 +1,8 @@
 'use client'
 
+import * as z from 'zod'
+import {useForm} from 'react-hook-form'
+
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button"
 import {
@@ -18,13 +21,16 @@ import {
     TabsList,
     TabsTrigger,
 } from "@/components/ui/tabs"
-
 export default function FormRegister() {
 
     const [formData, setFormData] = useState({
         nome: '',
         email: '',
         senha: '',
+        telefone: '',
+        cep: '',
+        endereco: '',
+        user_adotante: 'usuario', 
     });
 
     const handleInputChange = (e) => {
@@ -35,9 +41,31 @@ export default function FormRegister() {
         }));
     };
 
-    const handleSubmitCadastro = (e) => {
+
+    const handleSubmitCadastro = async (e) => {
         e.preventDefault();
-        console.log('Cadastro enviado:', formData);
+
+        try {
+            const response = await fetch('https://api-petsys.onrender.com/api/v1/adotantes', {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData),
+            });
+
+            if (response.ok) {
+                alert('Usuário registrado com sucesso!');
+            } else {
+                alert('Erro ao registrar o usuário.');
+            }
+
+        } catch (error) {
+            console.error('Erro de rede:', error);
+            alert('Erro ao enviar os dados.');
+        }
+
+        console.log('Usuário cadastrado:', formData);
     };
 
     const handleSubmitLogin = (e) => {
@@ -46,10 +74,9 @@ export default function FormRegister() {
     };
 
     return (
-        <div className="flex h-screen w-full justify-center items-center px-4 sm:px-6 lg:px-8 ">
+        <div className="flex h-screen w-full justify-center items-center px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-center w-full max-w-6xl space-x-8">
-
-                <div className="  w-full max-w-md">
+                <div className="w-full max-w-md">
                     <Tabs defaultValue="login" className="w-full">
                         <TabsList className="grid w-full grid-cols-2 mb-4">
                             <TabsTrigger value="login">Login</TabsTrigger>
@@ -137,6 +164,49 @@ export default function FormRegister() {
                                                 onChange={handleInputChange}
                                                 placeholder="Digite sua senha"
                                             />
+                                        </div>
+                                        <div className="space-y-2">
+                                            <Label htmlFor="telefone">Telefone</Label>
+                                            <Input
+                                                id="telefone"
+                                                name="telefone"
+                                                value={formData.telefone}
+                                                onChange={handleInputChange}
+                                                placeholder="Digite seu telefone"
+                                            />
+                                        </div>
+                                        <div className="space-y-2">
+                                            <Label htmlFor="cep">CEP</Label>
+                                            <Input
+                                                id="cep"
+                                                name="cep"
+                                                value={formData.cep}
+                                                onChange={handleInputChange}
+                                                placeholder="Digite seu CEP"
+                                            />
+                                        </div>
+                                        <div className="space-y-2">
+                                            <Label htmlFor="endereco">Endereço</Label>
+                                            <Input
+                                                id="endereco"
+                                                name="endereco"
+                                                value={formData.endereco}
+                                                onChange={handleInputChange}
+                                                placeholder="Digite seu endereço"
+                                            />
+                                        </div>
+                                        <div className="space-y-2">
+                                            <Label htmlFor="user_adotante">Tipo de Usuário</Label>
+                                            <select
+                                                id="user_adotante"
+                                                name="user_adotante"
+                                                value={formData.user_adotante}
+                                                onChange={handleInputChange}
+                                                className="w-full p-3 border border-gray-300 rounded-md"
+                                            >
+                                                <option value="usuario">Usuário</option>
+                                                <option value="administrador">Administrador</option>
+                                            </select>
                                         </div>
                                         <CardFooter>
                                             <Button type="submit" className="w-full">Criar conta</Button>

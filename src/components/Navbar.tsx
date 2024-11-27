@@ -23,6 +23,16 @@ const Navbar = () => {
     }
   }, []);
 
+ 
+
+
+  const handleContatoClick = () => {
+    window.scrollTo({
+      top: document.documentElement.scrollHeight,
+      behavior: 'smooth', 
+    });
+  };
+
   return (
     <nav className={`fixed top-0 left-0 right-0 z-10 transition-all duration-300 ease-in-out
       ${isScrolled ? 'bg-black border-b-2 border-gray-600 py-2 opacity-40' : 'bg-transparent py-4 opacity-100'}`}>
@@ -31,16 +41,30 @@ const Navbar = () => {
         
         <ul className="flex space-x-6">
           <li>
-            <Button variant="ghost" className={`text-white ${isScrolled ? 'opacity-75' : 'opacity-100'}`}>Home</Button>
+            <Button 
+              variant="ghost" 
+              className={`text-white ${isScrolled ? 'opacity-75' : 'opacity-100'}`} 
+             
+            >
+            <Link href="#"> Home </Link>  
+            </Button>
           </li>
           <li>
-            <Button variant="ghost" className={`text-white ${isScrolled ? 'opacity-75' : 'opacity-100'}`}>Meus Favoritos</Button>
+            <Button variant="ghost" className={`text-white ${isScrolled ? 'opacity-75' : 'opacity-100'}`}>
+              Meus Favoritos
+            </Button>
           </li>
           <li>
-            <Button variant="ghost" className={`text-white ${isScrolled ? 'opacity-75' : 'opacity-100'}`}>Contato</Button>
+            <Button 
+              variant="ghost" 
+              className={`text-white ${isScrolled ? 'opacity-75' : 'opacity-100'}`} 
+              onClick={handleContatoClick} 
+            >
+              Contato
+            </Button>
           </li>
           <li>
-          <Button variant="outline" className={` ${isScrolled ? 'opacity-75' : 'opacity-100'}`}  asChild>
+            <Button variant="outline" className={` ${isScrolled ? 'opacity-75' : 'opacity-100'}`}  asChild>
               <Link href="/createacc">Login</Link>
             </Button>
           </li>

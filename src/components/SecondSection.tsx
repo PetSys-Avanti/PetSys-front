@@ -5,10 +5,13 @@ import PetCard from './PetCard';
 import { FaDog } from 'react-icons/fa';
 import { Button } from "@/components/ui/button"; 
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function SecondSection() {
   const [pets, setPets] = useState([""]);  
   const [error, setError] = useState(null);
+
+ 
 
   useEffect(() => {
     const fetchPets = async () => {
@@ -28,10 +31,18 @@ export default function SecondSection() {
     };
 
     fetchPets();
+
+   
   }, []);  
 
+
+  
+
   return (
-    <section className="py-10 max-w-none bg-white w-full">
+    <>{
+      console.log(pets)
+    }
+      <section className="py-10 max-w-none bg-white w-full">
       <h2 className="text-5xl font-semibold text-gray-800 mb-8 mt-8 text-center">
         Novos no pedaço <FaDog className="inline-block text-3xl ml-2" />
       </h2>
@@ -43,9 +54,14 @@ export default function SecondSection() {
       </div>
 
       <div className="flex justify-center mt-6">
+        <Link href='/allPets'>
+        
+        
         <Button variant="outline" className="hover:bg-blue-200 p-6 py-7 px-7 text-xl transition duration-300 mt-7 rounded-full">
           Ver todos
         </Button>
+        
+        </Link>
       </div>
 
       <div className="w-1/3 h-0.5 bg-gray-300 mt-6 mx-auto"></div>
@@ -56,12 +72,13 @@ export default function SecondSection() {
 
       <div className='flex justify-center gap-10 my-10'>
         <div className="w-44 h-44 flex justify-center items-center">
-          <Image src="/images/download.png" height={150} width={150} alt='Logo Avanti' className="object-contain" />
+          <Image alt='Logo Avanti' src="/images/download.png" height={150} width={150} alt='Logo Avanti' className="object-contain" />
         </div>
         <div className="w-44 h-44 flex justify-center items-center">
-          <Image src="/images/Logo-atl.png" height={150} width={150} alt='Logo Atlântico' className="object-contain" />
+          <Image alt='Logo atlântico' src="/images/Logo-atl.png" height={150} width={150} alt='Logo Atlântico' className="object-contain" />
         </div>
       </div>
     </section>
+        </>
   );
 }

@@ -1,13 +1,6 @@
 import Image from 'next/image'
-import CachorroHumano from '../app/public/images/cachorrohumano.png'
 
 
-interface FullWidthImageProps {
-  src: string
-  alt: string
-  width: number
-  height: number
-}
 
 const FullWidthImage = () => {
   return (

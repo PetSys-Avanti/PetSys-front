@@ -27,6 +27,7 @@ const PetRegistration = () => {
         e.preventDefault();
 
         const dataNascimentoCompleta = new Date(formData.data_nasc).toISOString();
+        
 
 
         const updatedFormData = {
