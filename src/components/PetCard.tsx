@@ -3,7 +3,12 @@ import { FaHeart } from 'react-icons/fa';
 import Link from 'next/link';
 import Image from 'next/image';
 
+
+
+
 const PetCard = ({ pet }: any) => {
+
+
   return (
     <Link href={`/pet/${pet.pet_id}`}>
       <div className="flex flex-col items-center shadow-lg h-[400px] w-[280px] bg-gray-100 p-6 text-gray-800 rounded-xl relative cursor-pointer transition-transform duration-200 hover:scale-105 hover:shadow-xl">

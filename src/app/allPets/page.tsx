@@ -57,7 +57,7 @@ export default function AllPetsPage() {
   }
 
   return (
-    <section className="py-10 max-w-none bg-white w-full">
+    <section className="py-24 max-w-none bg-white w-full">
       <h2 className="text-5xl font-semibold text-gray-800 mb-8 mt-8 text-center">
         Todos os Pets <FaDog className="inline-block text-3xl ml-2" />
       </h2>

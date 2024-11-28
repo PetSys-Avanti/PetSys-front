@@ -4,21 +4,20 @@ import Navbar from '../components/Navbar'
 
 
 
-import FirstSection from './FirstSection';
 import SecondSection from './SecondSection';
-import Header from './Header';
+import ThirdSection from './ThirdSection';
+import FirstSection from './Firstsection';
 import Footer from './Footer';
 
 export default function MainContainer() {
 
 
   return (
-    <div className="relative">
-      <Navbar />
-      <Header />
+    <div >
       <main className=" bg-gray-200 px-4 sm:px-6 lg:px-0">
-        <FirstSection />
+       <FirstSection />
         <SecondSection />
+        <ThirdSection />
       </main>
 
       <Footer />

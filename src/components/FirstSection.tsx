@@ -1,34 +1,19 @@
 import React from 'react'
-import { FaDog, FaHome, FaWallet } from 'react-icons/fa'
+import ImageCentral from './ImageCentral'
+import AdoptionButtons from './AdoptionButtons'
 
-export default function FirstSection() {
+export default function Center() {
   return (
-    <section className="  text-center max-w-4xl mx-auto mb-10 pt-16 pb-10">
-    <h1 className="text-3xl font-semibold text-gray-800 mb-10 ">
-      Nossa missão é ajudar abrigos de animais e grupos de resgate a cuidar de animais de estimação necessitados.
-    </h1>
-    <div className="flex justify-center items-center space-x-12">
-      <div className="flex flex-col items-center p-8">
-        <FaDog className="w-32 h-32 text-gray-800 mb-4" />
-        <h1 className="text-2xl font-semibold text-gray-800">100,000+</h1>
-        <h2 className="text-lg font-medium text-gray-600 mb-2">animais resgatados</h2>
-        <p className="text-sm text-gray-500">em 2024</p>
-      </div>
-      <div className="h-24 border-r-2 border-gray-300 mx-8"></div>
-      <div className="flex flex-col items-center p-8">
-        <FaHome className="w-32 h-32 text-gray-800 mb-4" />
-        <h1 className="text-2xl font-semibold text-gray-800">1000+</h1>
-        <h2 className="text-lg font-medium text-gray-600 mb-2">grupos de adoções</h2>
-        <p className="text-sm text-gray-500">receberam nossas ajudas.</p>
-      </div>
-      <div className="h-24 border-r-2 border-gray-300 mx-8"></div>
-      <div className="flex flex-col items-center p-8">
-        <FaWallet className="w-32 h-32 text-gray-800 mb-4" />
-        <h1 className="text-2xl font-semibold text-gray-800">R$ 10 milhões</h1>
-        <h2 className="text-lg font-medium text-gray-600 mb-2">em dinheiro e produtos distribuídos</h2>
-        <p className="text-sm text-gray-500">desde 2001</p>
-      </div>
+  
+    <div className="relative">
+    <ImageCentral />
+    <div className="absolute inset-0 bg-black opacity-10"></div>
+
+    <div className="absolute top-1/2 left-1/4 transform -translate-x-1/2 -translate-y-1/2 bg-white bg-opacity-80 p-8 rounded-2xl shadow-lg max-w-2xl">
+      <h1 className="text-3xl font-bold text-gray-800 mb-4">Salvando Pets. Juntos.</h1>
+      <p className="text-lg text-gray-600 mb-8">Nossa comunidade PetSys é a única sem fins lucrativos voltada 100% para adoção e resgate de animais.</p>
+      <AdoptionButtons />
     </div>
-  </section>
+  </div>
   )
 }

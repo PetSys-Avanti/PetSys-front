@@ -1,10 +1,8 @@
 'use client'
 
-import * as z from 'zod'
-import {useForm} from 'react-hook-form'
-
-import React, { useState } from 'react';
-import { Button } from "@/components/ui/button"
+import * as z from 'zod';
+import { useState } from 'react';
+import { Button } from "@/components/ui/button";
 import {
     Card,
     CardContent,
@@ -12,16 +10,29 @@ import {
     CardFooter,
     CardHeader,
     CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
     Tabs,
     TabsContent,
     TabsList,
     TabsTrigger,
-} from "@/components/ui/tabs"
+} from "@/components/ui/tabs";
+import { useRouter } from 'next/navigation';
+
+const formSchema = z.object({
+    email: z.string({required_error: "Email necessário"}).email({message: 'Precisa ser email válido.'}),
+    senha: z.string({required_error: 'Senha não pode ser vazia'}).min(5, {message: 'Precisa ter mínimo de 5 caracteres'}).max(12),
+    nome: z.string({required_error: 'Nome não pode estar vazio'}),
+    telefone: z.string().optional(),
+    cep: z.string().optional(),
+    endereco: z.string().optional(),
+    user_adotante: z.enum(["usuario", "administrador"]).default("usuario"),
+});
+
 export default function FormRegister() {
+    const router = useRouter();
 
     const [formData, setFormData] = useState({
         nome: '',
@@ -33,7 +44,8 @@ export default function FormRegister() {
         user_adotante: 'usuario', 
     });
 
-    const handleInputChange = (e) => {
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         setFormData((prevData) => ({
             ...prevData,
@@ -41,20 +53,19 @@ export default function FormRegister() {
         }));
     };
 
-
-    const handleSubmitCadastro = async (e) => {
+    const handleSubmitCadastro = async (e: React.FormEvent) => {
         e.preventDefault();
-
         try {
             const response = await fetch('https://api-petsys.onrender.com/api/v1/adotantes', {
                 method: "POST",
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(formData),
             });
 
             if (response.ok) {
+                router.push('/');
                 alert('Usuário registrado com sucesso!');
             } else {
                 alert('Erro ao registrar o usuário.');
@@ -64,13 +75,42 @@ export default function FormRegister() {
             console.error('Erro de rede:', error);
             alert('Erro ao enviar os dados.');
         }
-
-        console.log('Usuário cadastrado:', formData);
     };
 
-    const handleSubmitLogin = (e) => {
+    const handleSubmitLogin = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log('Login enviado:', formData);
+        try {
+            const response = await fetch('https://api-petsys.onrender.com/api/v1/login', {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: formData.email,
+                    senha: formData.senha,
+                }),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                const { token } = data; 
+
+   
+                localStorage.setItem('auth_token', token);
+
+             
+                router.push('/');
+               
+                alert('Login realizado com sucesso!');
+            } else {
+                const errorData = await response.json();
+                alert(errorData.message || 'Erro ao realizar login');
+            }
+
+        } catch (error) {
+            console.error('Erro ao autenticar usuário:', error);
+            alert('Erro de rede ou ao enviar os dados');
+        }
     };
 
     return (
@@ -78,8 +118,8 @@ export default function FormRegister() {
             <div className="flex items-center justify-center w-full max-w-6xl space-x-8">
                 <div className="w-full max-w-md">
                     <Tabs defaultValue="login" className="w-full">
-                        <TabsList className="grid w-full grid-cols-2 mb-4">
-                            <TabsTrigger value="login">Login</TabsTrigger>
+                        <TabsList className="grid w-full grid-cols-2 ">
+                            <TabsTrigger className='transition-all delay-150' value="login">Login</TabsTrigger>
                             <TabsTrigger value="create-account">Criar conta</TabsTrigger>
                         </TabsList>
 

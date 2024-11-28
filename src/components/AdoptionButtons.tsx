@@ -20,7 +20,7 @@ const AdoptionButtons = () => {
   };
 
   return (
-    <div className="flex justify-center my-5 space-x-2">
+    <div className=" flex justify-center my-5 space-x-2">
       <button 
         onClick={handleAdoptClick} 
         className="bg-[#4a90e2] text-white border-none rounded-md py-3 px-10 text-lg flex items-center space-x-2 hover:bg-[#3a7dd1] transition-colors"
