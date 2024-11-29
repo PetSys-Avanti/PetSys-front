@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react';
-import { useParams } from 'next/navigation';  // Alteração aqui
+import { useParams } from 'next/navigation'; 
 import { FaHeart } from 'react-icons/fa';
 import Image from 'next/image';
 

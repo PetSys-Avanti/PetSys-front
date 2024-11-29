@@ -3,10 +3,17 @@ import { FaHeart } from 'react-icons/fa';
 import Link from 'next/link';
 import Image from 'next/image';
 
+interface Pet {
+  pet_id: number;
+  image: string;
+  nome: string;
+  sexo_pet: string;
+  data_nasc: string;
+  tamanho_pet: string;
+}
 
 
-
-const PetCard = ({ pet }: any) => {
+const PetCard = ({ pet }: { pet: Pet }) => {
 
 
   return (
@@ -17,13 +24,20 @@ const PetCard = ({ pet }: any) => {
           className="absolute top-4 right-4 text-red-400 text-xl cursor-pointer transition-transform duration-200 hover:scale-110"
         />
         <div className="relative max-h-[250px] w-full rounded-xl overflow-hidden mb-4 shadow-md">
-          <Image
-            src={pet.image}
-            width={400}
-            height={700}
-            alt='Imagem pet'
-            className="w-full h-auto rounded-xl shadow-md"
-          />
+          {pet.image ? (
+            <Image
+              src={pet.image}
+              width={400}
+              height={700}
+              alt="Imagem pet"
+              className="w-full h-auto rounded-xl shadow-md"
+            />
+          ) : (
+            <div className="w-full h-[250px] bg-gray-300 rounded-xl flex items-center justify-center">
+              <span>Imagem não disponível</span>
+            </div>
+          )}
+
         </div>
         <div className="flex flex-col items-center text-sm text-gray-600">
           <h3 className="text-lg font-semibold text-gray-900 mb-2">{pet.nome}</h3>

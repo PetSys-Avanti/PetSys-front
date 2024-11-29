@@ -1,6 +1,7 @@
 'use client';
 
 import { useContext } from 'react';
+import { useRouter } from 'next/navigation'; 
 import { AuthContext } from "@/app/contexts/AuthContext";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -16,10 +17,18 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 export function UserNav() {
-  const { user, logout } = useContext(AuthContext); 
+  const { user, logout } = useContext(AuthContext);
+  const router = useRouter();  
+
+
+  const handleProfileClick = () => {
+    if (user) {
+      router.push(`/perfil/${user.adotante_id}`);  
+    }
+  };
 
   const handleLogout = () => {
-    logout(); 
+    logout();
   };
 
   return (
@@ -27,7 +36,6 @@ export function UserNav() {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-8 w-8 rounded-full cursor-pointer">
           <Avatar className="h-8 w-8">
-            {/* Exibe a imagem do avatar ou a inicial do nome do usuário */}
             <AvatarImage src="/avatars/01.png" alt={user?.nome || "User Avatar"} />
             <AvatarFallback>{user?.nome?.[0]}</AvatarFallback>
           </Avatar>
@@ -40,14 +48,17 @@ export function UserNav() {
       >
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            
             <p className="text-sm font-medium leading-none">{user?.nome}</p>
             <p className="text-xs leading-none text-muted-foreground">{user?.email}</p>
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem className="cursor-pointer">
+   
+          <DropdownMenuItem 
+            className="cursor-pointer"
+            onClick={handleProfileClick} 
+          >
             Perfil
             <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
           </DropdownMenuItem>
@@ -59,7 +70,7 @@ export function UserNav() {
         <DropdownMenuSeparator />
         <DropdownMenuItem
           className="cursor-pointer text-red-500"
-          onClick={handleLogout} 
+          onClick={handleLogout}
         >
           Log out
           <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
