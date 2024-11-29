@@ -19,23 +19,24 @@ interface FilePreview {
   preview: string
 }
 
-export function ImageUploadPlaceHolder() {
+interface ImageUploadPlaceHolderProps {
+  onImageUpload: (url: string) => void; 
+}
+
+export function ImageUploadPlaceHolder({ onImageUpload }: ImageUploadPlaceHolderProps) {
   const [file, setFile] = useState<FilePreview | null>(null)
   const [fileToSend, setFileToSend] = useState<{ path: string } | null>(null)
 
   const onDrop = useCallback(async (acceptFiles: File[]) => {
     try {
- 
       const file = acceptFiles[0]
       setFile({
         file,
         preview: URL.createObjectURL(file),
       })
 
-      
       const supabase = createClientComponentClient()
 
-      
       const { data, error } = await supabase.storage
         .from(process.env.NEXT_PUBLIC_SUPABASE_APP_BUCKET_IMAGE_FOLDER)
         .upload(
@@ -55,11 +56,9 @@ export function ImageUploadPlaceHolder() {
   }, [])
 
   useEffect(() => {
-  
     if (file) URL.revokeObjectURL(file.preview)
   }, [file])
 
- 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     maxFiles: 3,
@@ -69,10 +68,8 @@ export function ImageUploadPlaceHolder() {
     }
   })
 
- 
   const handleImage = async () => {
     try {
-     
       if (!fileToSend?.path) {
         console.log("Nenhum arquivo carregado ainda.")
         return
@@ -80,7 +77,6 @@ export function ImageUploadPlaceHolder() {
 
       const supabase = createClientComponentClient()
 
- 
       const { data, error } = await supabase.storage
         .from(process.env.NEXT_PUBLIC_SUPABASE_APP_BUCKET_IMAGE_FOLDER)
         .getPublicUrl(fileToSend.path)
@@ -89,12 +85,12 @@ export function ImageUploadPlaceHolder() {
         console.log("Erro ao obter URL pública", error)
       } else {
         console.log("Public URL:", data.publicUrl)
+        onImageUpload(data.publicUrl); 
       }
     } catch (error) {
       console.log("handleImage", error)
     }
   }
-
   return (
     <div className="w-full flex h-[200px] shrink-0 items-center justify-center rounded-md border border-dashed">
       <div className="mx-auto flex max-w-[420px] flex-col items-center justify-center text-center">
@@ -115,7 +111,7 @@ export function ImageUploadPlaceHolder() {
 
         <h3 className="mt-4 text-lg font-semibold">Adicione a foto do Pet</h3>
         <p className="mb-4 mt-2 text-sm text-muted-foreground">
-          You have not added any podcasts. Add one below.
+      Você ainda não adicionou nenhuma. Click abaixo para adicionar.
         </p>
         <Dialog>
           <DialogTrigger asChild>
@@ -125,9 +121,9 @@ export function ImageUploadPlaceHolder() {
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Adicionar Foto</DialogTitle>
+              <DialogTitle className="text-center">Adicionar Foto</DialogTitle>
               <DialogDescription>
-                Arraste a foto em ordem para salvar.
+           
               </DialogDescription>
             </DialogHeader>
             <div className="grid gap-4 py-4">
@@ -159,7 +155,7 @@ export function ImageUploadPlaceHolder() {
               </div>
             </div>
             <DialogFooter>
-              <Button onClick={handleImage}>Upload Imagem</Button>
+              <Button className="rounded-full" onClick={handleImage}>Upload Imagem</Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>

@@ -11,7 +11,7 @@ const PetRegistration = () => {
         descricao: '',
         tamanho_pet: '',  
         sexo_pet: '',     
-        image_pet: '',
+        image_pet: '',  
         personalidade_pet: '', 
         status_pet: ''    
     });
@@ -22,6 +22,17 @@ const PetRegistration = () => {
             ...formData,
             [name]: value
         });
+    };
+
+    
+    const handleImageUpload = (url: string) => {
+
+        setFormData((prevData) => ({
+            ...prevData,
+            image_pet: url  
+        }));
+
+        console.log("URL da imagem salva no estado do pai:", url);
     };
 
     const handleSubmit = async (e) => {
@@ -141,7 +152,6 @@ const PetRegistration = () => {
                     </div>
                 </div>
 
-             
                 <div className="flex space-x-4">
                     <div className="flex-1">
                         <label className="block text-lg text-gray-700 mb-2">Personalidade do Pet</label>
@@ -185,9 +195,8 @@ const PetRegistration = () => {
                     </div>
                 </div>
 
-               
                 <div>
-                        <ImageUploadPlaceHolder />
+                    <ImageUploadPlaceHolder onImageUpload={handleImageUpload} />
                 </div>
 
                 <div>
