@@ -9,8 +9,7 @@ PetSys é uma plataforma digital que conecta pessoas interessadas em adotar anim
 - [Instalação](#instalação)
 - [Estrutura de Pastas](#estrutura-de-pastas)
 - [Funcionalidades](#funcionalidades)
-- [Como Contribuir](#como-contribuir)
-- [Licença](#licença)
+
 
 ## Sobre
 
