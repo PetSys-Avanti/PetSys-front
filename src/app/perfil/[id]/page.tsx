@@ -11,7 +11,7 @@ export default function Profile() {
   const [adotante, setAdotante] = useState(null);
   const [todosAdotantes, setTodosAdotantes] = useState(null);
   const [adotantesVisiveis, setAdotantesVisiveis] = useState([]); // Estado para armazenar adotantes visíveis
-  const [indice, setIndice] = useState(3); // Estado para controlar a quantidade de adotantes visíveis
+  const [indice, setIndice] = useState(3); 
   const router = useRouter();
 
   useEffect(() => {

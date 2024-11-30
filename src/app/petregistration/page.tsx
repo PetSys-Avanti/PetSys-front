@@ -13,7 +13,7 @@ const PetRegistration = () => {
         sexo_pet: '',     
         image_pet: '',  
         personalidade_pet: '', 
-        status_pet: ''    
+       
     });
 
     const handleChange = (e) => {

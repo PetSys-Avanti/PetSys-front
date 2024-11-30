@@ -1,7 +1,7 @@
 'use client';
 
 import { useContext } from 'react';
-import { useRouter } from 'next/navigation'; 
+import { useRouter } from 'next/navigation';
 import { AuthContext } from "@/app/contexts/AuthContext";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -15,15 +15,21 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import Link from 'next/link';
 
 export function UserNav() {
   const { user, logout } = useContext(AuthContext);
-  const router = useRouter();  
+  const router = useRouter();
 
 
   const handleProfileClick = () => {
     if (user) {
-      router.push(`/perfil/${user.adotante_id}`);  
+      router.push(`/perfil/${user.adotante_id}`);
+    }
+  };
+  const handlePetClick = () => {
+    if (user) {
+      router.push(`/adocoes/${user.adotante_id}`);
     }
   };
 
@@ -54,18 +60,23 @@ export function UserNav() {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-   
-          <DropdownMenuItem 
+
+          <DropdownMenuItem
             className="cursor-pointer"
-            onClick={handleProfileClick} 
+            onClick={handleProfileClick}
           >
             Perfil
             <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
           </DropdownMenuItem>
-          <DropdownMenuItem className="cursor-pointer">
-            Meus Favoritos
-            <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
-          </DropdownMenuItem>
+
+         
+
+            <DropdownMenuItem onClick={handlePetClick} className="cursor-pointer">
+              Meus pets
+              <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+            </DropdownMenuItem>
+
+       
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem

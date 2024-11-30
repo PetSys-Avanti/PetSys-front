@@ -6,12 +6,12 @@ const FullWidthImage = () => {
       <Image
         src="/images/cachorrohumano.png"
         alt="Imagem de fundo hero"
-        fill // Preenche o contêiner
+        fill 
         style={{
-          objectFit: 'cover', // Para que a imagem cubra completamente a área
-          objectPosition: 'center', // Centraliza a imagem
+          objectFit: 'cover', 
+          objectPosition: 'center', 
         }}
-        priority // Indicando que a imagem é prioritária
+        priority 
         className="absolute top-0 left-0"
       />
     </div>
