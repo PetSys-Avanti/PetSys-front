@@ -13,7 +13,7 @@ PetSys é uma plataforma digital que conecta pessoas interessadas em adotar anim
 
 ## Sobre
 
-Este projeto foi desenvolvido para o Bootcamp [Nome do Bootcamp] com o intuito de ajudar ONGs e abrigos de animais a encontrarem lares para os pets que precisam. Ele permite que os usuários visualizem animais disponíveis para adoção, filtrem os resultados por características como tamanho e idade, e façam a adoção diretamente pelo sistema.
+Este projeto foi desenvolvido para o Bootcamp Atlântico Avanti com o intuito de ajudar ONGs e abrigos de animais a encontrarem lares para os pets que precisam. Ele permite que os usuários visualizem animais disponíveis para adoção, filtrem os resultados por características como tamanho e idade, e façam a adoção diretamente pelo sistema.
 
 Além disso, o sistema oferece um painel para administradores e abrigos, permitindo que eles gerenciem os animais, visualizem dados estatísticos sobre o número de adoções realizadas, e mantenham suas informações sempre atualizadas.
 
