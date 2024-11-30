@@ -34,7 +34,6 @@ const PetPage = () => {
   }, [id]);
 
   const handleAdoptClick = () => {
-    
     alert(`Você está adotando o pet ${pet?.nome}!`);
   };
 
@@ -81,7 +80,6 @@ const PetPage = () => {
             <strong>Status:</strong> {pet.status_pet}
           </p>
 
-          
           <button
             onClick={handleAdoptClick}
             className="mt-4 px-6 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 transition duration-200"
@@ -94,7 +92,7 @@ const PetPage = () => {
       <div className="flex flex-col ml-8 w-[350px]">
         <div className="p-6 bg-yellow-100 rounded-xl shadow-md text-gray-800">
           <h4 className="text-lg font-semibold mb-4 text-gray-900">Sobre o {pet.nome}</h4>
-          <p className="text-lg font-serif text-gray-800 leading-relaxed h-[200px] overflow-y-auto">
+          <p className="text-lg font-serif text-gray-800 leading-relaxed h-[250px]"> 
             {pet.descricao}
           </p>
         </div>

@@ -70,7 +70,7 @@ const PetRegistration = () => {
     };
 
     return (
-        <div className="flex flex-col items-center max-w-4xl mx-auto p-8 bg-white shadow-lg rounded-lg">
+        <div className=" mt-24 flex flex-col items-center max-w-4xl mx-auto p-8 bg-white shadow-lg rounded-lg">
             <h2 className="text-3xl font-semibold text-center text-gray-800 mb-8">Registrar Pet</h2>
             <form onSubmit={handleSubmit} className="w-full space-y-6">
                 <div>
@@ -179,20 +179,7 @@ const PetRegistration = () => {
                         </select>
                     </div>
 
-                    <div className="flex-1">
-                        <label className="block text-lg text-gray-700 mb-2">Status do Pet</label>
-                        <select
-                            name="status_pet"
-                            value={formData.status_pet}
-                            onChange={handleChange}
-                            required
-                            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all"
-                        >
-                            <option value="">Selecione o status</option>
-                            <option value="disponivel">Disponível</option>
-                            <option value="adotado">Adotado</option>
-                        </select>
-                    </div>
+        
                 </div>
 
                 <div>

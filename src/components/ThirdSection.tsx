@@ -12,7 +12,6 @@ export default function ThirdSection() {
   const [error, setError] = useState(null);
 
 
-
   useEffect(() => {
     const fetchPets = async () => {
       try {

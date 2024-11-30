@@ -19,7 +19,7 @@ import { useParams } from 'next/navigation';
 
 const formSchema = z.object({
     email: z.string({ required_error: "Email necessário" }).email({ message: 'Precisa ser um email válido.' }),
-    nome: z.string().min(1, { message: 'Nome não pode estar vazio' }), 
+    nome: z.string().min(1, { message: 'Nome não pode estar vazio' }),
     telefone: z.string().optional(),
     cep: z.string().optional(),
     endereco: z.string().optional(),
