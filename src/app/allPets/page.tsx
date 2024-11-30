@@ -1,7 +1,6 @@
-'use client'
+'use client';
 
 import React, { useEffect, useState } from 'react';
-
 import { Button } from "@/components/ui/button";
 import { FaDog } from 'react-icons/fa';
 import PetCard from '@/components/PetCard';
@@ -24,7 +23,8 @@ export default function AllPetsPage() {
 
         const data = await response.json();
         setPets(data);  
-        setDisplayedPets(data.slice(0, 4));  
+        
+        setDisplayedPets(data.filter(pet => pet.status_pet === 'disponivel').slice(0, 4));  
       } catch (err: any) {
         setError(err.message);
       } finally {
@@ -36,7 +36,8 @@ export default function AllPetsPage() {
   }, []);  
 
   const handleLoadMore = () => {
-    const nextPets = pets.slice(displayedPets.length, displayedPets.length + 4);
+    const nextPets = pets.filter(pet => pet.status_pet === 'disponivel')
+                          .slice(displayedPets.length, displayedPets.length + 4);
     setDisplayedPets((prev) => [...prev, ...nextPets]);
   };
 
@@ -61,14 +62,13 @@ export default function AllPetsPage() {
       <h2 className="text-5xl font-semibold text-gray-800 mb-8 mt-8 text-center">
         Todos os Pets <FaDog className="inline-block text-3xl ml-2" />
       </h2>
-
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 max-w-screen-xl mx-auto">
         {displayedPets.map((pet) => (
           <PetCard key={pet.pet_id} pet={pet} />
         ))}
       </div>
 
-      {displayedPets.length < pets.length && (
+      {displayedPets.length < pets.filter(pet => pet.status_pet === 'disponivel').length && (
         <div className="flex justify-center mt-6">
           <Button
             onClick={handleLoadMore}
@@ -83,13 +83,10 @@ export default function AllPetsPage() {
       <div className="w-1/3 h-0.5 bg-gray-300 mt-6 mx-auto"></div>
 
       <div className="flex justify-center mt-6">
-
         <Link href='/'>
-        
-        <Button variant="outline" className="hover:bg-blue-200 p-6 py-7 px-7 text-xl transition duration-300 mt-7 rounded-full">
-          Voltar para Início
-        </Button>
-        
+          <Button variant="outline" className="hover:bg-blue-200 p-6 py-7 px-7 text-xl transition duration-300 mt-7 rounded-full">
+            Voltar para Início
+          </Button>
         </Link>
       </div>
     </section>

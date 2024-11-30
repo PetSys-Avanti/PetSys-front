@@ -21,20 +21,12 @@ interface Pet {
 
 const PetPage = () => {
   const { id } = useParams();
-  const [pet, setPet] = useState<Pet | null>(null);
-  
-  const [adotado, setAdotado] = useState({
-    pet_id: '',
-    adotante_id: ''
-
-  });
-
-
-  const [adotante, setAdotante] = useState<any>(null); // Alteração para garantir que adotante tenha valor
+  const [pet, setPet] = useState<Pet | null>(null); 
+  const [adotante, setAdotante] = useState<any>(null); 
   const { user, isAuthenticated } = useContext(AuthContext);
   const router = useRouter();
+  const [statusPet, setStatusPet] = useState("disponivel");
 
-  // Função para buscar os dados do pet
   const fetchPetData = async () => {
     const response = await fetch(`https://api-petsys.onrender.com/api/v1/pets/${id}`);
     const data = await response.json();
@@ -46,7 +38,6 @@ const PetPage = () => {
       fetchPetData();
     }
   }, [id]);
-
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -60,6 +51,7 @@ const PetPage = () => {
 
         if (!user?.adotante_id) {
           console.log("Adotante não encontrado");
+          router.push('createacc');
           return;
         }
 
@@ -84,43 +76,44 @@ const PetPage = () => {
     };
     
     fetchUser();
-    
   }, [isAuthenticated, router, user?.adotante_id]);
 
-  
-  const handleAdoptClick = async () => {
+  const handleAdopt = async () => {
     try {
       const token = localStorage.getItem('auth_token');
       if (!token) {
-        alert("Você precisa estar autenticado para adotar.");
+        alert('Você precisa estar autenticado para adotar.');
         return;
       }
 
       if (!pet?.pet_id || !adotante?.adotante_id) {
-        alert("Pet ou adotante não encontrado.");
+        alert('Pet ou adotante não encontrado.');
         return;
       }
 
-      console.log(pet.pet_id + ' ' + adotante?.adotante_id )
-
-      const res = await fetch('https://api-petsys.onrender.com/api/v1/adocoes/', {
-        method: 'POST',
+      // Fazendo o PUT para alterar o status do pet para "adotado"
+      const response = await fetch(`https://api-petsys.onrender.com/api/v1/pets/${pet.pet_id}`, {
+        method: "PUT",
         headers: {
-          'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify({
-          id_pet: pet.pet_id, 
-          id_adotante: adotante.adotante_id,
+          status_pet: "adotado",
         }),
       });
 
-      const data = await res.json();
-      setAdotado(data);
-      console.log(data);
-      alert(`Você está adotando o pet ${pet?.nome}!`);
+      if (response.ok) {
+        const updatedPet = await response.json();
+        setPet(updatedPet);  // Atualiza o estado do pet com o novo status
+        alert(`Você adotou o pet ${pet.nome}!`);
+      } else {
+        alert('Erro ao adotar o pet.');
+      }
+
     } catch (error) {
-      console.error("Erro ao adotar o pet", error);
+      console.error('Erro ao adotar o pet', error);
+      alert('Erro ao adotar o pet.');
     }
   };
 
@@ -162,10 +155,11 @@ const PetPage = () => {
           <p className="text-sm mb-2"><strong>Status:</strong> {pet.status_pet}</p>
 
           <button
-            onClick={handleAdoptClick}
-            className="mt-4 px-6 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 transition duration-200"
+            onClick={handleAdopt}
+            className={`mt-4 px-6 py-2 font-semibold rounded-lg shadow-md transition duration-200 ${pet.status_pet === "adotado" ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-500 text-white hover:bg-blue-600'}`}
+            disabled={pet.status_pet === "adotado"}
           >
-            Adotar {pet.nome}
+            {pet.status_pet === "adotado" ? "Adotado" : `Adotar ${pet.nome}`}
           </button>
         </div>
       </div>
