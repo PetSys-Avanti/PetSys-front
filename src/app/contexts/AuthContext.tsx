@@ -23,12 +23,12 @@ export default function AuthProvider({ children }: AuthProviderProps) {
   const checkToken = () => {
     const token = localStorage.getItem('auth_token');
     
-    // Verificando o JWT armazenado no localStorage
+
     console.log('JWT armazenado:', token);
 
     if (token) {
       try {
-        // Decodificando o JWT
+     
         const decoded = jwtDecode<any>(token);
         
        

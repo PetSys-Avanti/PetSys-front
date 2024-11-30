@@ -26,6 +26,7 @@ interface ImageUploadPlaceHolderProps {
 export function ImageUploadPlaceHolder({ onImageUpload }: ImageUploadPlaceHolderProps) {
   const [file, setFile] = useState<FilePreview | null>(null)
   const [fileToSend, setFileToSend] = useState<{ path: string } | null>(null)
+  const [isModalOpen, setIsModalOpen] = useState(false); 
 
   const onDrop = useCallback(async (acceptFiles: File[]) => {
     try {
@@ -56,7 +57,10 @@ export function ImageUploadPlaceHolder({ onImageUpload }: ImageUploadPlaceHolder
   }, [])
 
   useEffect(() => {
-    if (file) URL.revokeObjectURL(file.preview)
+
+    if (file && file.preview) {
+      return () => URL.revokeObjectURL(file.preview)
+    }
   }, [file])
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -86,45 +90,64 @@ export function ImageUploadPlaceHolder({ onImageUpload }: ImageUploadPlaceHolder
       } else {
         console.log("Public URL:", data.publicUrl)
         onImageUpload(data.publicUrl); 
+        setIsModalOpen(false); 
       }
     } catch (error) {
       console.log("handleImage", error)
     }
   }
+
   return (
     <div className="w-full flex h-[200px] shrink-0 items-center justify-center rounded-md border border-dashed">
       <div className="mx-auto flex max-w-[420px] flex-col items-center justify-center text-center">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          stroke="currentColor"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="2"
-          className="h-10 w-10 text-muted-foreground"
-          viewBox="0 0 24 24"
-        >
-          <circle cx="12" cy="11" r="1" />
-          <path d="M11 17a1 1 0 0 1 2 0c0 .5-.34 3-.5 4.5a.5.5 0 0 1-1 0c-.16-1.5-.5-4-.5-4.5ZM8 14a5 5 0 1 1 8 0" />
-          <path d="M17 18.5a9 9 0 1 0-10 0" />
-        </svg>
+        
+      
+        {file ? (
+          <div className="flex w-48 relative">
+            <img
+              src={file.preview} 
+              alt="Imagem do Pet"
+              className="w-48 h-48 object-contain rounded-md"
+            />
+          </div>
+        ) : (
+          <>
+           
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              className="h-10 w-10 text-muted-foreground"
+              viewBox="0 0 24 24"
+            >
+              <circle cx="12" cy="11" r="1" />
+              <path d="M11 17a1 1 0 0 1 2 0c0 .5-.34 3-.5 4.5a.5.5 0 0 1-1 0c-.16-1.5-.5-4-.5-4.5ZM8 14a5 5 0 1 1 8 0" />
+              <path d="M17 18.5a9 9 0 1 0-10 0" />
+            </svg>
 
-        <h3 className="mt-4 text-lg font-semibold">Adicione a foto do Pet</h3>
-        <p className="mb-4 mt-2 text-sm text-muted-foreground">
-      Você ainda não adicionou nenhuma. Click abaixo para adicionar.
-        </p>
-        <Dialog>
+            <h3 className="mt-4 text-lg font-semibold">Adicione a foto do Pet</h3>
+            <p className="mb-4 mt-2 text-sm text-muted-foreground">
+              Você ainda não adicionou nenhuma. Clique abaixo para adicionar.
+            </p>
+          </>
+        )}
+
+       
+        <Dialog open={isModalOpen} onOpenChange={(open) => setIsModalOpen(open)}>
           <DialogTrigger asChild>
-            <Button size="sm" className="relative">
-              Adicionar Foto
-            </Button>
+           
+            {!file && (
+              <Button size="sm" className="relative" onClick={() => setIsModalOpen(true)}>
+                Adicionar Foto
+              </Button>
+            )}
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
               <DialogTitle className="text-center">Adicionar Foto</DialogTitle>
-              <DialogDescription>
-           
-              </DialogDescription>
             </DialogHeader>
             <div className="grid gap-4 py-4">
               {!file && (
@@ -139,15 +162,15 @@ export function ImageUploadPlaceHolder({ onImageUpload }: ImageUploadPlaceHolder
                   )}
                 </div>
               )}
+
               <div className="flex flex-col items-center justify-evenly sm:flex-row gap-2">
                 {file && (
                   <div className="flex flex-row flex-wrap drop-shadow-md">
                     <div className="flex w-48 relative">
                       <img
-                        src={file.preview}
+                        src={file.preview} 
                         alt="Imagem do Pet"
                         className="w-48 h-48 object-contain rounded-md"
-                        onLoad={() => URL.revokeObjectURL(file.preview)}
                       />
                     </div>
                   </div>

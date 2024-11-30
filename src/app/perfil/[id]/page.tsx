@@ -7,13 +7,13 @@ import { useRouter } from 'next/navigation';
 import { AuthContext } from '@/app/contexts/AuthContext';
 
 export default function Profile() {
-  const { user, isAuthenticated } = useContext(AuthContext); 
+  const { user, isAuthenticated, setIsAuthenticated } = useContext(AuthContext); 
   const [adotante, setAdotante] = useState(null);
   const router = useRouter();
 
   useEffect(() => {
     if (!isAuthenticated) {
-      router.push('/createacc'); // Redirecionar para login se o usuário não estiver autenticado
+      router.push('/'); 
       return;
     }
 
@@ -23,7 +23,7 @@ export default function Profile() {
         
         if (!token) {
           console.log("Token não encontrado");
-          router.push('/createacc'); // Redireciona se o token não for encontrado
+          router.push('/'); 
           return;
         }
 
@@ -44,7 +44,7 @@ export default function Profile() {
       } catch (error) {
         console.error('Erro ao buscar adotante:', error);
         alert('Erro ao carregar adotante');
-        router.push('/createacc'); // Redireciona caso falhe ao carregar os dados
+        router.push('/'); 
       }
     };
 
@@ -67,7 +67,6 @@ export default function Profile() {
     );
   }
 
-  // Função para deletar o perfil
   const handleDeleteProfile = async () => {
     const confirmDelete = window.confirm("Você tem certeza que deseja deletar seu perfil?");
     if (!confirmDelete) return;
@@ -91,8 +90,13 @@ export default function Profile() {
         throw new Error('Erro ao deletar perfil');
       }
 
+      
+
+      localStorage.removeItem('auth_token');
+
+      setIsAuthenticated(false);
       alert('Perfil deletado com sucesso');
-      router.push('/'); 
+      router.push('/');  
     } catch (error) {
       console.error('Erro ao deletar perfil:', error);
       alert('Erro ao deletar perfil');

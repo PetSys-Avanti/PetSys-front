@@ -22,9 +22,9 @@ import {
 import { useRouter } from 'next/navigation';
 
 const formSchema = z.object({
-    email: z.string({required_error: "Email necessário"}).email({message: 'Precisa ser email válido.'}),
-    senha: z.string({required_error: 'Senha não pode ser vazia'}).min(5, {message: 'Precisa ter mínimo de 5 caracteres'}).max(12),
-    nome: z.string({required_error: 'Nome não pode estar vazio'}),
+    email: z.string({ required_error: "Email necessário" }).email({ message: 'Precisa ser email válido.' }),
+    senha: z.string({ required_error: 'Senha não pode ser vazia' }).min(5, { message: 'Precisa ter mínimo de 5 caracteres' }).max(12),
+    nome: z.string({ required_error: 'Nome não pode estar vazio' }),
     telefone: z.string().optional(),
     cep: z.string().optional(),
     endereco: z.string().optional(),
@@ -41,7 +41,7 @@ export default function FormRegister() {
         telefone: '',
         cep: '',
         endereco: '',
-        user_adotante: 'usuario', 
+        user_adotante: 'usuario',
     });
 
 
@@ -93,14 +93,10 @@ export default function FormRegister() {
 
             if (response.ok) {
                 const data = await response.json();
-                const { token } = data; 
-
-   
+                const { token } = data;
                 localStorage.setItem('auth_token', token);
-
-             
                 router.push('/');
-               
+
                 alert('Login realizado com sucesso!');
             } else {
                 const errorData = await response.json();
@@ -156,7 +152,7 @@ export default function FormRegister() {
                                             />
                                         </div>
                                         <CardFooter>
-                                            <Button type="submit" className="w-full">Entrar</Button>
+                                            <Button type="submit" className="w-full rounded-xl mt-3">Entrar</Button>
                                         </CardFooter>
                                     </form>
                                 </CardContent>
@@ -249,7 +245,7 @@ export default function FormRegister() {
                                             </select>
                                         </div>
                                         <CardFooter>
-                                            <Button type="submit" className="w-full">Criar conta</Button>
+                                            <Button type="submit" className="w-full rounded-xl mt-3">Criar conta</Button>
                                         </CardFooter>
                                     </form>
                                 </CardContent>

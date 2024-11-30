@@ -14,11 +14,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useRouter } from 'next/navigation';
-import { useParams } from 'next/navigation'; // Importando useParams
+import { useParams } from 'next/navigation';
+
 
 const formSchema = z.object({
-    email: z.string({required_error: "Email necessário"}).email({message: 'Precisa ser email válido.'}),
-    nome: z.string({required_error: 'Nome não pode estar vazio'}),
+    email: z.string({ required_error: "Email necessário" }).email({ message: 'Precisa ser um email válido.' }),
+    nome: z.string().min(1, { message: 'Nome não pode estar vazio' }), 
     telefone: z.string().optional(),
     cep: z.string().optional(),
     endereco: z.string().optional(),
@@ -26,7 +27,7 @@ const formSchema = z.object({
 
 export default function EditProfile() {
     const router = useRouter();
-    const { id } = useParams(); // Usando useParams para acessar o parâmetro da URL
+    const { id } = useParams();
     const [formData, setFormData] = useState({
         nome: '',
         email: '',
@@ -35,9 +36,9 @@ export default function EditProfile() {
         endereco: '',
     });
     const [loading, setLoading] = useState(true);
+    const [formErrors, setFormErrors] = useState<{ [key: string]: string }>({}); 
 
     useEffect(() => {
-        // Buscar dados do perfil a partir do ID
         const fetchProfile = async () => {
             try {
                 const token = localStorage.getItem('auth_token');
@@ -74,7 +75,7 @@ export default function EditProfile() {
         };
 
         fetchProfile();
-    }, [id]); 
+    }, [id]);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -86,6 +87,21 @@ export default function EditProfile() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
+     
+        const result = formSchema.safeParse(formData);
+
+        if (!result.success) {
+           
+            const errors: { [key: string]: string } = {};
+            result.error.errors.forEach((err) => {
+                errors[err.path[0]] = err.message;
+            });
+            setFormErrors(errors);
+            return;
+        }
+
+    
         try {
             const token = localStorage.getItem('auth_token');
             if (!token) {
@@ -94,7 +110,7 @@ export default function EditProfile() {
             }
 
             const response = await fetch(`https://api-petsys.onrender.com/api/v1/adotantes/${id}`, {
-                method: "PUT", 
+                method: "PUT",
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`,
@@ -104,11 +120,10 @@ export default function EditProfile() {
 
             if (response.ok) {
                 alert('Perfil atualizado com sucesso!');
-                router.push(`/perfil/${id}`); 
+                router.push(`/perfil/${id}`);
             } else {
                 alert('Erro ao atualizar o perfil');
             }
-
         } catch (error) {
             console.error('Erro de rede:', error);
             alert('Erro ao enviar os dados');
@@ -141,6 +156,7 @@ export default function EditProfile() {
                                         onChange={handleInputChange}
                                         placeholder="Digite seu nome completo"
                                     />
+                                    {formErrors.nome && <p className="text-red-600">{formErrors.nome}</p>}
                                 </div>
                                 <div className="space-y-2">
                                     <Label htmlFor="email">E-mail</Label>
@@ -152,6 +168,7 @@ export default function EditProfile() {
                                         onChange={handleInputChange}
                                         placeholder="Digite seu e-mail"
                                     />
+                                    {formErrors.email && <p className="text-red-600">{formErrors.email}</p>}
                                 </div>
                                 <div className="space-y-2">
                                     <Label htmlFor="telefone">Telefone</Label>
@@ -162,6 +179,7 @@ export default function EditProfile() {
                                         onChange={handleInputChange}
                                         placeholder="Digite seu telefone"
                                     />
+                                    {formErrors.telefone && <p className="text-red-600">{formErrors.telefone}</p>}
                                 </div>
                                 <div className="space-y-2">
                                     <Label htmlFor="cep">CEP</Label>
@@ -172,6 +190,7 @@ export default function EditProfile() {
                                         onChange={handleInputChange}
                                         placeholder="Digite seu CEP"
                                     />
+                                    {formErrors.cep && <p className="text-red-600">{formErrors.cep}</p>}
                                 </div>
                                 <div className="space-y-2">
                                     <Label htmlFor="endereco">Endereço</Label>
@@ -182,6 +201,7 @@ export default function EditProfile() {
                                         onChange={handleInputChange}
                                         placeholder="Digite seu endereço"
                                     />
+                                    {formErrors.endereco && <p className="text-red-600">{formErrors.endereco}</p>}
                                 </div>
                                 <CardFooter>
                                     <Button type="submit" className="w-full">Atualizar Perfil</Button>
